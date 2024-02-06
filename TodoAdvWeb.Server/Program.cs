@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using TodoAdvWeb.Server.Areas.Identity.Data;
 using TodoAdvWeb.Server.Data;
+using TodoAdvWeb.Server.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 var connectionString = builder.Configuration.GetConnectionString("TodoContextConnection") ?? throw new InvalidOperationException("Connection string 'TodoContextConnection' not found.");
@@ -18,6 +19,24 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
+
+using (var scope = app.Services.CreateScope())
+{
+    var services = scope.ServiceProvider;
+
+    try
+    {
+        SeedData.EnsurePopulated(services).Wait();
+    } catch (Exception ex)
+    {
+        // print an error message to the console
+        var logger = services.GetRequiredService<ILogger<Program>>();
+
+        logger.LogError(ex, "An error occured seeding the database.");
+    }
+
+}
+
 
 app.UseDefaultFiles();
 app.UseStaticFiles();
