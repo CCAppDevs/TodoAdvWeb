@@ -11,7 +11,6 @@ using TodoAdvWeb.Server.Models;
 
 namespace TodoAdvWeb.Server.Controllers
 {
-    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class TodoesController : ControllerBase
