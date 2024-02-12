@@ -1,11 +1,12 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 
-interface WeatherForecast {
-  date: string;
-  temperatureC: number;
-  temperatureF: number;
-  summary: string;
+export interface Todo {
+  todoId: number;
+  description: string;
+  ownerId: string;
+  completed: boolean;
+  todoUserId: string;
 }
 
 @Component({
@@ -14,23 +15,34 @@ interface WeatherForecast {
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit {
-  public forecasts: WeatherForecast[] = [];
+  // list of todoes
+  todoList: Todo[] = [
+    {
+      todoId: 1,
+      description: "Do Stuff",
+      ownerId: "Jesse",
+      completed: false,
+      todoUserId: "Jesse"
+    },
+    {
+      todoId: 2,
+      description: "Do More Stuff",
+      ownerId: "Jesse",
+      completed: false,
+      todoUserId: "Jesse"
+    },
+    {
+      todoId: 3,
+      description: "Do More More Stuff",
+      ownerId: "Jesse",
+      completed: false,
+      todoUserId: "Jesse"
+    }
+  ];
 
   constructor(private http: HttpClient) {}
 
   ngOnInit() {
-    this.getForecasts();
-  }
-
-  getForecasts() {
-    this.http.get<WeatherForecast[]>('/weatherforecast').subscribe(
-      (result) => {
-        this.forecasts = result;
-      },
-      (error) => {
-        console.error(error);
-      }
-    );
   }
 
   title = 'todoadvweb.client';
