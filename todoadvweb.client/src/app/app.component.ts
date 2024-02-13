@@ -1,13 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-
-export interface Todo {
-  todoId: number;
-  description: string;
-  ownerId: string;
-  completed: boolean;
-  todoUserId: string;
-}
+import { Todo } from './todo';
 
 @Component({
   selector: 'app-root',
@@ -16,33 +9,19 @@ export interface Todo {
 })
 export class AppComponent implements OnInit {
   // list of todoes
-  todoList: Todo[] = [
-    {
-      todoId: 1,
-      description: "Do Stuff",
-      ownerId: "Jesse",
-      completed: false,
-      todoUserId: "Jesse"
-    },
-    {
-      todoId: 2,
-      description: "Do More Stuff",
-      ownerId: "Jesse",
-      completed: false,
-      todoUserId: "Jesse"
-    },
-    {
-      todoId: 3,
-      description: "Do More More Stuff",
-      ownerId: "Jesse",
-      completed: false,
-      todoUserId: "Jesse"
-    }
-  ];
+  todoList: Todo[] = [];
 
   constructor(private http: HttpClient) {}
 
   ngOnInit() {
+    this.getAllTodoes();
+  }
+
+  getAllTodoes() {
+    this.http.get<Todo[]>("/api/Todoes").subscribe(data => {
+      console.log(data);
+      this.todoList = data;
+    });
   }
 
   title = 'todoadvweb.client';
