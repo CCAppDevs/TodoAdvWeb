@@ -38,6 +38,7 @@ namespace TodoAdvWeb.Server.Controllers
             if (todo == null)
             {
                 return NotFound();
+
             }
 
             return todo;
