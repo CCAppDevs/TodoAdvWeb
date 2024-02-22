@@ -1,0 +1,8 @@
+<form class="todo-form" [formGroup]="todoForm">
+  <label>Task:</label>
+  <input type="text" formControlName="description" />
+  <label>Completed?</label>
+  <input type="checkbox" formControlName="completed" />
+
+  <button (click)="onSubmit()">Submit</button>
+</form>

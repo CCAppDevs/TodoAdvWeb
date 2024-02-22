@@ -1,11 +1,10 @@
+<app-todo-form></app-todo-form>
+
 <div class="list">
   <app-todo-item *ngFor="let todo of todoList" [todo]="todo"></app-todo-item>
 </div>
 
 <br />
-
-<button (click)="getAllTodoes()">Refresh</button>
-<button (click)="addNewTodo()">Add New Item</button>
 
 <pre>
 {{ todoList | json }}
