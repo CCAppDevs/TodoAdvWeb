@@ -1,34 +1,47 @@
 import { Injectable } from '@angular/core';
 import { Todo } from './todo';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable, Subject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class TodoService {
+  todo$: BehaviorSubject<Todo[]> = new BehaviorSubject<Todo[]>([]);
+  singleTodo$: BehaviorSubject<Todo | null> = new BehaviorSubject<Todo | null>(null);
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {
+  }
 
   // Create
-  createTodo(newTodo: Todo): Observable<Todo> {
+  createTodo(newTodo: Todo) {
     // create a new todo in the database
-    return this.http.post<Todo>("/api/todoes", newTodo);
+    this.http.post<Todo>("/api/todoes", newTodo).subscribe(data => {
+      let list = this.todo$.getValue();
+      list.push(data);
+      this.todo$.next(list);
+    });
   }
 
   // Read
-  getAllTodoes(): Observable<Todo[]> {
+  getAllTodoes() {
     // get all todos from the api
-    return this.http.get<Todo[]>("/api/todoes");
+    this.http.get<Todo[]>("/api/todoes").subscribe(data => {
+      this.todo$.next(data);
+    })
   }
 
   getTodoById(id: number) {
     // get a todo by id
+    this.http.get<Todo>("/api/todoes/" + id).subscribe(data => {
+      this.singleTodo$.next(data);
+    });
   }
 
   // Update
   updateTodo(id: number, newTodo: Todo) {
     // update a todo with new data
+    //this.http.put<Todo>("")
   }
 
   // delete

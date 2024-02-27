@@ -36,9 +36,7 @@ export class TodoFormComponent implements OnInit {
       todoUserId: ''
     }
 
-    this.data.createTodo(todo).subscribe(data => {
-      console.log(data);
-    });
+    this.data.createTodo(todo);
   }
 
 }

@@ -1,11 +1,11 @@
 <app-todo-form></app-todo-form>
 
 <div class="list">
-  <app-todo-item *ngFor="let todo of todoList" [todo]="todo"></app-todo-item>
+  <app-todo-item *ngFor="let todo of todos | async" [todo]="todo"></app-todo-item>
 </div>
 
 <br />
 
 <pre>
-{{ todoList | json }}
+{{ todos | async | json }}
 </pre>
