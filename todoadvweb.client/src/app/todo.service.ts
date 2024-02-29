@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Todo } from './todo';
 import { HttpClient } from '@angular/common/http';
-import { BehaviorSubject, Observable, Subject } from 'rxjs';
+import { BehaviorSubject, Observable, ReplaySubject, Subject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -9,8 +9,9 @@ import { BehaviorSubject, Observable, Subject } from 'rxjs';
 export class TodoService {
   todo$: BehaviorSubject<Todo[]> = new BehaviorSubject<Todo[]>([]);
   singleTodo$: BehaviorSubject<Todo | null> = new BehaviorSubject<Todo | null>(null);
-
+  
   constructor(private http: HttpClient) {
+    
   }
 
   // Create
@@ -29,6 +30,8 @@ export class TodoService {
     this.http.get<Todo[]>("/api/todoes").subscribe(data => {
       this.todo$.next(data);
     })
+
+
   }
 
   getTodoById(id: number) {
@@ -46,6 +49,9 @@ export class TodoService {
 
   // delete
   deleteTodo(id: number) {
-    // delete a specific todo
+    this.http.delete("/api/todoes/" + id).subscribe(data => {
+      console.log("deleting:", id, data);
+      this.getAllTodoes();
+    });
   }
 }

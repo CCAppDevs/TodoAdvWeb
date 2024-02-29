@@ -4,7 +4,11 @@
   <app-todo-item *ngFor="let todo of todos | async" [todo]="todo"></app-todo-item>
 </div>
 
-<br />
+<hr />
+
+<app-highlight></app-highlight>
+
+<hr />
 
 <pre>
 {{ todos | async | json }}

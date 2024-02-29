@@ -7,12 +7,14 @@ import { TodoItemComponent } from './todo-item/todo-item.component';
 import { TodoService } from './todo.service';
 import { TodoFormComponent } from './todo-form/todo-form.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { HighlightComponent } from './highlight/highlight.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     TodoItemComponent,
-    TodoFormComponent
+    TodoFormComponent,
+    HighlightComponent
   ],
   imports: [
     BrowserModule,
